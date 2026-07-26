@@ -1,0 +1,13 @@
+dataset: 'src/configs/dataset/iwildcam_cropped.yaml'
+dataloader:
+  num_workers: 4
+  prefetch_factor: 2
+training:
+  batch_size: 64
+  max_epochs: 50
+  optimizer:
+    weight_decay: 1e-4
+model:
+  name: 'resnet50_scratch'
+  pretrained: False
+  frozen: False

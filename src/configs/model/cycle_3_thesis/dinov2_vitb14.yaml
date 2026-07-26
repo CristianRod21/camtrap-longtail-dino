@@ -1,0 +1,16 @@
+dataset: 'src/configs/dataset/iwildcam.yaml'
+dataloader:
+  num_workers: 4
+  prefetch_factor: 2
+training:
+  batch_size: 64
+  max_epochs: 10
+  optimizer:
+    lr: 0.001
+    weight_decay: 0.0
+model:
+  name: 'dinov2_vitb14'
+  pretrained: True
+  frozen: True
+  freeze_strategy: 'all'
+  backbone: 'dinov2_vitb14'

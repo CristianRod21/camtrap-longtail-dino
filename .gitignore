@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[codz]
+*.so
+.venv/
+*.egg-info/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Tools
+.ruff_cache/
+.mypy_cache/
+.pdm-python
+
+# Env
+.env
+.envrc
+
+# Project artifacts
+checkpoints/
+logs/
+/data/

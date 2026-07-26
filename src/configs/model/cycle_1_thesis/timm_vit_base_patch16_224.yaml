@@ -1,0 +1,16 @@
+dataset: 'src/configs/dataset/iwildcam.yaml'
+dataloader:
+  num_workers: 4
+  prefetch_factor: 2
+training:
+  batch_size: 64
+  max_epochs: 10
+  optimizer:
+    lr: 0.001
+    weight_decay: 0.0
+model:
+  name: 'timm_vit_base_patch16_224'
+  pretrained: True
+  frozen: True
+  freeze_strategy: 'all'
+  backbone: 'timm_vit_base_patch16_224.augreg_in1k'

@@ -1,0 +1,14 @@
+name: iWildCam
+paths:
+  base_dir: '/path/to/iwildcam_224/'
+  train:
+    metadata: 'metadata/metadata/iwildcam2022_train_annotations.json'
+    image_dir: 'train/train'
+    detections: 'megadetector_train.json'
+  val:
+    metadata: 'metadata/metadata/iwildcam2022_val_annotations.json'
+    image_dir: 'val/val'
+    detections: 'megadetector_train.json'
+  test:
+    metadata: 'metadata/metadata/iwildcam2022_test_information.json'
+    image_dir: 'test/test'
