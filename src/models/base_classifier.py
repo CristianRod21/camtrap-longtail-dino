@@ -316,10 +316,27 @@ class BaseClassifier(pl.LightningModule):
         Returns:
             Tensor of shape [B, D] where D is self.feature_dim.
         """
-        # DINOv2 / DINOv3 — use dedicated API for intermediate layers
+        # DINOv2 / DINOv3 — take the normalized CLS token.
+        #
+        # get_intermediate_layers(x, n=1)[0] returns ONLY patch tokens; the
+        # class token is stripped unless return_class_token=True is passed.
+        # Indexing [:, 0] into that result selects the top-left image patch,
+        # not CLS, and it has the same shape and dtype so nothing errors.
+        # forward_features names the token instead of relying on position.
+        if hasattr(self.backbone, "forward_features"):
+            out = self.backbone.forward_features(x)
+            if isinstance(out, dict) and "x_norm_clstoken" in out:
+                return out["x_norm_clstoken"]
+
         if hasattr(self.backbone, "get_intermediate_layers"):
-            features = self.backbone.get_intermediate_layers(x, n=1)[0]
-            return features[:, 0]  # CLS token
+            # Fallback for backbones without forward_features: ask for the
+            # class token explicitly rather than indexing into patch tokens.
+            layer = self.backbone.get_intermediate_layers(
+                x, n=1, return_class_token=True
+            )[0]
+            if isinstance(layer, (tuple, list)):
+                return layer[1]  # (patch_tokens, class_token)
+            return layer.mean(dim=1)
 
         features = self.backbone(x)
 
